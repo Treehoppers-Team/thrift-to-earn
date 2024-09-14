@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { ConnectWalletButton } from './components/ConnectWallet';
 
 export default function Home() {
   return (
@@ -48,7 +49,7 @@ export default function Home() {
         </motion.video>
         </motion.div>
 
-        {/* Connect Wallet Button here */}
+        <ConnectWalletButton />
 
         <div className='my-6 flex flex-col space-y-6'>
           <Link 

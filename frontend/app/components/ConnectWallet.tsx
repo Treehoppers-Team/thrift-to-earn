@@ -1,47 +1,50 @@
 "use client"; // <-- This is the key part
 
-import { Button, Fade, HStack, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Button, Fade, Text } from "@chakra-ui/react";
+import { useEffect, useState, useCallback } from "react";
 import { useWallet, useWalletModal } from "@vechain/dapp-kit-react";
 
 export const ConnectWalletButton = () => {
   const { account } = useWallet();
-  const { open } = useWalletModal();
+  const { open, onConnectionStatusChange } = useWalletModal();
   const [isClient, setIsClient] = useState(false);
+  const [buttonText, setButtonText] = useState("Connect Wallet");
 
-  useEffect(() => {
-    setIsClient(true); // Ensures this runs only in the browser
+  const handleConnected = useCallback((address: string | null) => {
+    if (address) {
+      const formattedAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
+      setButtonText(`Disconnect ${formattedAddress}`);
+    } else {
+      setButtonText("Connect Wallet");
+    }
   }, []);
 
-  if (!isClient) return null; // Don't render anything on the server side
+  useEffect(() => {
+    setIsClient(true);
+    handleConnected(account);
+  }, [account, handleConnected]);
 
-  if (!account) {
-    return (
-      <Fade in={true}>
-        <Button
-          onClick={open}
-          colorScheme="primary"
-          size="md"
-          data-testid="connect-wallet"
-        >
-          Connect Wallet
-        </Button>
-      </Fade>
-    );
-  }
+  useEffect(() => {
+    const unsubscribe = onConnectionStatusChange(handleConnected);
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
+  }, [onConnectionStatusChange, handleConnected]);
+
+  if (!isClient) return null;
 
   return (
     <Fade in={true}>
       <Button
         onClick={open}
-        rounded={"full"}
-        color="black"
+        colorScheme={account ? "gray" : "primary"}
         size="md"
-        bg="rgba(235, 236, 252, 1)"
+        rounded={account ? "full" : "md"}
+        bg={account ? "rgba(235, 236, 252, 1)" : undefined}
+        color={account ? "black" : undefined}
+        data-testid="connect-wallet"
       >
-        <HStack spacing={2}>
-          <Text fontWeight={"400"}>{account}</Text>
-        </HStack>
+        <Text fontWeight={account ? "400" : "normal"}>{buttonText}</Text>
       </Button>
     </Fade>
   );
