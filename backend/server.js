@@ -32,12 +32,12 @@ app.post('/distribute-rewards', async (req, res) => {
   };
 
   try {
-    const isSuccess = await registerSubmission(submission);
+    const { isSuccess, txID } = await registerSubmission(submission);
     if (isSuccess) {
-      res.status(200).json({ message: 'Reward distributed successfully!' });
-    } else {
-      res.status(500).json({ error: 'Failed to distribute rewards.' });
-    }
+      res.status(200).json({ message: 'Reward distributed successfully!', txID });
+  } else {
+      res.status(500).json({ message: 'Failed to distribute rewards.', txID });
+  }
   } catch (error) {
     console.error('Error during submission:', error);
     res.status(500).json({ error: 'An error occurred during reward distribution.' });
@@ -45,7 +45,7 @@ app.post('/distribute-rewards', async (req, res) => {
 });
 
 // Start the server
-const port = 3000;
+const port = 8000;
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
