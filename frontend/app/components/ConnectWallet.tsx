@@ -25,7 +25,7 @@ export const ConnectWalletButton = () => {
   }, [account, handleConnected]);
 
   useEffect(() => {
-    const unsubscribe = onConnectionStatusChange(handleConnected);
+    const unsubscribe:any = onConnectionStatusChange(handleConnected);
     return () => {
       if (unsubscribe) unsubscribe();
     };
