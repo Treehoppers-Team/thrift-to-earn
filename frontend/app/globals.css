@@ -25,3 +25,9 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer components {
+  .custom-wallet-button {
+    @apply bg-gray-800 text-white py-2 px-4 rounded !important;
+  }
+}

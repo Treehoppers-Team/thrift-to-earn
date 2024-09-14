@@ -33,7 +33,7 @@ export default function User() {
       </header>
       <main className="flex flex-col gap-8 items-center text-center max-w-4xl">
 
-        {/* replace value with userAddress */}
+        
         <div className='bg-white p-4'>
           <QRCode value="0xb15D296fA2a1077f6bD38CA6f6Fb676Ceb599998" />
         </div>

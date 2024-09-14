@@ -1,8 +1,13 @@
 "use client";
 
-import QrReader from "react-qr-scanner";
+import {
+  WalletButton,
+  useWallet,
+  useWalletModal,
+} from '@vechain/dapp-kit-react';
 import { useState } from "react";
 import { Scanner } from "@yudiel/react-qr-scanner";
+import Link from 'next/link';
 
 export default function Merchant() {
   const [tshirtCount, setTshirtCount] = useState(0);
@@ -40,24 +45,31 @@ export default function Merchant() {
   };
 
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-gray-900 text-white">
+    <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-4 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-neutral-900">
       <header className="w-full flex justify-between items-center">
-        <h2 className="text-2xl font-news">Thriftr</h2>
-        <button className="bg-black text-white px-4 py-2 rounded-full font-news">
-          Get Started Now
-        </button>
+        <Link
+          href='/'
+        >
+          <h2 className="text-3xl font-news text-tpeach">Thriftr</h2>
+        </Link>
+        <WalletButton />
       </header>
 
-      <main className="flex flex-col gap-8 items-center text-center max-w-full">
+      <main className="flex flex-col gap-8 items-center text-center max-w-full text-white">
         <div className="flex flex-col justify-center items-center gap-4 text-center">
+
+          <div className='py-2 bg-black px-8 mb-8 rounded-full'>
+            <h1 className='font-news text-xl'>Merchant</h1>
+          </div>
+
           <label>
             Number of T-shirts:
-            <div className="flex items-center">
+            <div className="flex justify-center items-center h-10 w-full my-2">
               <button
                 onClick={() =>
                   setTshirtCount(tshirtCount > 0 ? tshirtCount - 1 : 0)
                 }
-                className="px-3 py-2 bg-gray-700 text-white rounded-l-lg"
+                className="px-3 h-full bg-gray-700 text-white rounded-l-lg flex items-center justify-center w-1/4"
               >
                 -
               </button>
@@ -65,12 +77,12 @@ export default function Merchant() {
                 type="number"
                 value={tshirtCount}
                 onChange={(e) => setTshirtCount(Number(e.target.value))}
-                className="bg-black text-center"
+                className="bg-black text-center h-full w-2/4 px-2"
                 min="0"
               />
               <button
                 onClick={() => setTshirtCount(tshirtCount + 1)}
-                className="px-3 py-2 bg-gray-700 text-white rounded-r-lg"
+                className="px-3 h-full bg-gray-700 text-white rounded-r-lg flex items-center justify-center w-1/4"
               >
                 +
               </button>
@@ -79,12 +91,12 @@ export default function Merchant() {
 
           <label>
             Number of Pants:
-            <div className="flex items-center">
+            <div className="flex justify-center items-center h-10 w-full my-2">
               <button
                 onClick={() =>
                   setPantsCount(pantsCount > 0 ? pantsCount - 1 : 0)
                 }
-                className="px-3 py-2 bg-gray-700 text-white rounded-l-lg"
+                className="px-3 h-full bg-gray-700 text-white rounded-l-lg flex items-center justify-center w-1/4"
               >
                 -
               </button>
@@ -92,17 +104,18 @@ export default function Merchant() {
                 type="number"
                 value={pantsCount}
                 onChange={(e) => setPantsCount(Number(e.target.value))}
-                className="bg-black text-center"
+                className="bg-black text-center h-full w-2/4 px-2"
                 min="0"
               />
               <button
                 onClick={() => setPantsCount(pantsCount + 1)}
-                className="px-3 py-2 bg-gray-700 text-white rounded-r-lg"
+                className="px-3 h-full bg-gray-700 text-white rounded-r-lg flex items-center justify-center w-1/4"
               >
                 +
               </button>
             </div>
           </label>
+
 
           <label>
             Wallet Address:
