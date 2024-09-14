@@ -2,6 +2,7 @@
 
 import QrReader from "react-qr-scanner";
 import { useState } from "react";
+import { Scanner } from "@yudiel/react-qr-scanner";
 
 export default function Merchant() {
   const [tshirtCount, setTshirtCount] = useState(0);
@@ -9,20 +10,33 @@ export default function Merchant() {
   const [walletAddress, setWalletAddress] = useState("");
   const [scanning, setScanning] = useState(false);
 
-  const handleScan = (data: any | null) => {
-    if (data) {
-      setWalletAddress(data?.text);
-      setScanning(false); // Stop scanning after getting the result
+  // const handleScan = (data: any | null) => {
+  //   if (data) {
+  //     setWalletAddress(data?.text);
+  //     setScanning(false); // Stop scanning after getting the result
+  //   }
+  // };
+
+  const handleScan = (result: any) => {
+    if (!!result && result[0]?.rawValue) {
+      try {
+        // Extract rawValue from the first object in the array
+        setWalletAddress(result[0].rawValue);
+        setScanning(false); // Stop scanning after getting the result
+      } catch (err) {
+        console.log("Error parsing QR data");
+        console.log(result);
+      }
     }
   };
 
   const handleError = (err: any) => {
-    console.error(err);
+    console.log("Error accessing camera: " + err.message);
   };
 
   const previewStyle = {
-    height: 240,
-    width: 320,
+    height: 260,
+    width: 260,
   };
 
   return (
@@ -40,7 +54,9 @@ export default function Merchant() {
             Number of T-shirts:
             <div className="flex items-center">
               <button
-                onClick={() => setTshirtCount(tshirtCount > 0 ? tshirtCount - 1 : 0)}
+                onClick={() =>
+                  setTshirtCount(tshirtCount > 0 ? tshirtCount - 1 : 0)
+                }
                 className="px-3 py-2 bg-gray-700 text-white rounded-l-lg"
               >
                 -
@@ -65,7 +81,9 @@ export default function Merchant() {
             Number of Pants:
             <div className="flex items-center">
               <button
-                onClick={() => setPantsCount(pantsCount > 0 ? pantsCount - 1 : 0)}
+                onClick={() =>
+                  setPantsCount(pantsCount > 0 ? pantsCount - 1 : 0)
+                }
                 className="px-3 py-2 bg-gray-700 text-white rounded-l-lg"
               >
                 -
@@ -89,13 +107,15 @@ export default function Merchant() {
           <label>
             Wallet Address:
             <div className="flex flex-col min-w-full">
-              {walletAddress ? (<input
-                type="text"
-                value={walletAddress}
-                readOnly
-                className="bg-black text-center w-full p-2"
-                placeholder="Scan your wallet address"
-              />) : null}
+              {walletAddress ? (
+                <input
+                  type="text"
+                  value={walletAddress}
+                  readOnly
+                  className="bg-black text-center w-full p-2"
+                  placeholder="Scan your wallet address"
+                />
+              ) : null}
               <button
                 onClick={() => setScanning(true)}
                 className="px-4 py-2 mt-2 bg-gray-700 text-white rounded-full"
@@ -107,13 +127,16 @@ export default function Merchant() {
         </div>
 
         {scanning && (
-          <QrReader
-            delay={300}
-            style={previewStyle}
-            onError={handleError}
-            onScan={handleScan}
-            legacyMode={true}
-          />
+          // <QrReader
+          //   delay={300}
+          //   style={previewStyle}
+          //   onError={handleError}
+          //   onScan={handleScan}
+          //   legacyMode={true}
+          // />
+          <div style={previewStyle}>
+            <Scanner scanDelay={300} onScan={handleScan} onError={handleError} />
+          </div>
         )}
       </main>
     </div>
