@@ -11,6 +11,12 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        tgreen: "#097d4c",
+        tpeach: "#f1ead1"
+      },
+      fontFamily: {
+        cooper: ['"cooper-black-std"', 'sans-serif'],
+        news: ['"new-spirit"', 'sans-serif'],
       },
     },
   },
