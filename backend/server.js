@@ -1,15 +1,52 @@
+require('dotenv').config();
 const express = require('express');
+const { ethers } = require('@vechain/ethers');
+const { registerSubmission } = require('./utils');
+
 const app = express();
+app.use(express.json());
 
-// Define the port
-const port = 3000;
+const provider = new ethers.providers.JsonRpcProvider(process.env.TESTNET_URL);
+const mnemonic = process.env.MNEMONIC;
+const wallet = ethers.Wallet.fromMnemonic(mnemonic).connect(provider);
 
-// Define a route
+const contractABI = require('./abis/EcoEarnABI.json');
+const ecoearnAddress = process.env.ECOEARN_CONTRACT_ADDRESS;
+
+const ecoearncontract = new ethers.Contract(ecoearnAddress, contractABI, wallet);
+
 app.get('/', (req, res) => {
   res.send('Hello, World from Express!');
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
+
+app.post('/distribute-rewards', async (req, res) => {
+  const { amount, walletAddress } = req.body;
+
+  if (!amount || !walletAddress) {
+    return res.status(400).json({ error: 'Amount and wallet address are required' });
+  }
+  const submission = {
+    walletAddress: walletAddress,
+    amount: amount
+  };
+
+  try {
+    const isSuccess = await registerSubmission(submission);
+    if (isSuccess) {
+      res.status(200).json({ message: 'Reward distributed successfully!' });
+    } else {
+      res.status(500).json({ error: 'Failed to distribute rewards.' });
+    }
+  } catch (error) {
+    console.error('Error during submission:', error);
+    res.status(500).json({ error: 'An error occurred during reward distribution.' });
+  }
 });
+
+// Start the server
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+
