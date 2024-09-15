@@ -62,13 +62,7 @@ export default function Home() {
             </button>
           </Link>
         </div>
-
       </main>
-
-      <footer className="bg-tgreen min-h-full text-white w-full p-4 text-center flex flex-col space-y-2">
-        <p>Built by Thrifthoppers</p>
-        <p>VeChain x EasyA x BCG Hackathon 2024</p>
-      </footer>
     </div>
   );
 }

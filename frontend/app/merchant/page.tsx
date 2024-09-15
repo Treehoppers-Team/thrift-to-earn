@@ -80,12 +80,6 @@ export default function Merchant() {
 
   return (
     <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-4 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-neutral-900">
-      <header className="w-full flex justify-between items-center">
-        <Link href="/">
-          <h2 className="text-3xl font-news text-tpeach">Thriftr</h2>
-        </Link>
-        <WalletButton />
-      </header>
       <main className="flex flex-col gap-8 items-center text-center max-w-full text-white">
         <div className="flex flex-col justify-center items-center gap-4 text-center">
           <div className="py-2 bg-black px-8 mb-8 rounded-full">

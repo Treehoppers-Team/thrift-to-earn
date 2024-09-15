@@ -6,6 +6,7 @@ import "./globals.css";
 import dynamic from 'next/dynamic';
 import { ThriftProvider } from "./context/thriftContext";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -54,6 +55,7 @@ export default function RootLayout({
           >
             <Header />
             {children}
+            <Footer />
           </DAppKitProvider>
         </ThriftProvider>{" "}
       </body>
