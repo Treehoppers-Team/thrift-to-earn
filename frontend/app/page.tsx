@@ -45,20 +45,16 @@ export default function Home() {
         </motion.video>
         </motion.div>
 
-        <div className='my-6 flex flex-col space-y-6'>
-          <Link 
-            href='/user'
-          >
-            <button className='rounded-full bg-tgreen px-8 py-4'>
-              I am a Thrifter
+        <div className='my-6 flex flex-row space-x-4'>
+          <Link href='/user' className='flex-1'>
+            <button className='w-full rounded-[20px] bg-[#001e00] hover:bg-tgreen px-8 py-4 whitespace-nowrap'>
+              Start Thrifting Now {'->'}
             </button>
           </Link>
 
-          <Link 
-            href='/merchant'
-          >
-            <button className='rounded-full bg-tgreen px-8 py-4'>
-              I am a Merchant
+          <Link href='/merchant' className='flex-1'>
+            <button className='w-full rounded-[20px] bg-[#001e00] hover:bg-tgreen px-8 py-4 whitespace-nowrap'>
+              Reward Your Shoppers {'->'}
             </button>
           </Link>
         </div>
