@@ -2,10 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const { ethers } = require('@vechain/ethers');
 const { registerSubmission } = require('./utils');
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-
+app.use(cors());
 const provider = new ethers.providers.JsonRpcProvider(process.env.TESTNET_URL);
 const mnemonic = process.env.MNEMONIC;
 const wallet = ethers.Wallet.fromMnemonic(mnemonic).connect(provider);
