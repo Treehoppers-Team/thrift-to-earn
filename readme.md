@@ -1,5 +1,7 @@
 # BCG X EasyA Hackathon
 
+![Project Screenshot](./assets/Thriftr.jpg)
+
 Thrfit-to-Earn. 
 
 Thriftr is a sustainable and rewarding platform for users to engage in sustainable fashion practices and earn B3TR tokens in return.
