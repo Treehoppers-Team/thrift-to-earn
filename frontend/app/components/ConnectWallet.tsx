@@ -10,8 +10,8 @@ export const ConnectWalletButton = () => {
   const { open, onConnectionStatusChange } = useWalletModal();
   const [isClient, setIsClient] = useState(false);
   const [buttonText, setButtonText] = useState("Connect Wallet");
-  const {walletAddress, setWalletAddress} = useThrift()
- 
+  const { walletAddress, setWalletAddress } = useThrift();
+
   const handleConnected = useCallback((address: string | null) => {
     if (address) {
       const formattedAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
@@ -30,10 +30,11 @@ export const ConnectWalletButton = () => {
 
   useEffect(() => {
     const unsubscribe: any = onConnectionStatusChange(handleConnected);
-    console.log(walletAddress);
+    console.log(`Hello this is`, walletAddress);
     return () => {
       if (unsubscribe) unsubscribe();
     };
+    // Trigger a page reload
   }, [onConnectionStatusChange, handleConnected]);
 
   if (!isClient) return null;

@@ -1,8 +1,13 @@
 "use client";
 
-import { WalletButton } from "@vechain/dapp-kit-react";
+import {
+  WalletButton,
+  useWallet,
+  useWalletModal,
+} from "@vechain/dapp-kit-react";
 import Link from "next/link";
 import { useThrift } from "../context/thriftContext";
+import { ConnectWalletButton } from "../components/ConnectWallet";
 
 export default function Merchant() {
   // Transaction data
@@ -39,7 +44,8 @@ export default function Merchant() {
         <Link href="/">
           <h2 className="text-3xl font-news text-tpeach">Thriftr</h2>
         </Link>
-        <WalletButton />
+        {/* <WalletButton /> */}
+        <ConnectWalletButton/>
       </header>
       {!walletAddress ? (
         <div className="flex flex-col items-center justify-center min-h-[60vh]">
