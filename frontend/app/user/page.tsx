@@ -2,9 +2,11 @@
 
 import { WalletButton } from "@vechain/dapp-kit-react";
 import Link from "next/link";
+import { useThrift } from "../context/thriftContext";
 
 export default function Merchant() {
   // Transaction data
+  const { walletAddress, setWalletAddress } = useThrift();
   const transactions = [
     {
       date: "15-09-2024",
@@ -39,58 +41,62 @@ export default function Merchant() {
         </Link>
         <WalletButton />
       </header>
-
-      <main className="flex flex-col gap-8 items-center text-center max-w-full text-white">
-        <div className="flex flex-col justify-center items-center gap-4 text-center">
-          <div className="py-2 bg-black px-8 mb-8 rounded-full">
-            <h1 className="font-news text-xl">Thrifter</h1>
-          </div>
-
-          <table className="min-w-full bg-black text-white text-center">
-            <thead>
-              <tr>
-                <th className="border-b-2 border-gray-600 px-4 py-2">Date</th>
-                <th className="border-b-2 border-gray-600 px-4 py-2">
-                  Transaction Hash
-                </th>
-                <th className="border-b-2 border-gray-600 px-4 py-2">
-                  Tokens Distributed
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction, index) => (
-                <tr key={index}>
-                  <td className="border-t border-gray-600 px-4 py-2">
-                    {transaction.date}
-                  </td>
-                  <td className="border-t border-gray-600 px-4 py-2">
-                    <a
-                      href={`https://explore.vechain.org/transactions/${transaction.txHash}#info`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:underline"
-                    >
-                      {shortenTxHash(transaction.txHash)}
-                    </a>
-                  </td>
-                  <td className="border-t border-gray-600 px-4 py-2 ">
-                    {transaction.tokens}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {/* Spacing below the table for "40 Tokens Available" */}
-          <div className="py-2 bg-black px-8 mt-8 rounded-full">
-            40 Tokens Available
-          </div>
-          <button className="rounded-full bg-tgreen px-8 py-4">
-            Redeem
-          </button>
+      {!walletAddress ? (
+        <div className="flex flex-col items-center justify-center min-h-[60vh]">
+          <h1 className="text-2xl text-white mb-4">
+            Please connect your wallet
+          </h1>
         </div>
-      </main>
+      ) : (
+        <main className="flex flex-col gap-8 items-center text-center max-w-full text-white">
+          <div className="flex flex-col justify-center items-center gap-4 text-center">
+            <div className="py-2 bg-black px-8 mb-8 rounded-full">
+              <h1 className="font-news text-xl">Thrifter</h1>
+            </div>
+
+            <table className="min-w-full bg-black text-white text-center">
+              <thead>
+                <tr>
+                  <th className="border-b-2 border-gray-600 px-4 py-2">Date</th>
+                  <th className="border-b-2 border-gray-600 px-4 py-2">
+                    Transaction Hash
+                  </th>
+                  <th className="border-b-2 border-gray-600 px-4 py-2">
+                    Tokens Distributed
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((transaction, index) => (
+                  <tr key={index}>
+                    <td className="border-t border-gray-600 px-4 py-2">
+                      {transaction.date}
+                    </td>
+                    <td className="border-t border-gray-600 px-4 py-2">
+                      <a
+                        href={`https://explore.vechain.org/transactions/${transaction.txHash}#info`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 hover:underline"
+                      >
+                        {shortenTxHash(transaction.txHash)}
+                      </a>
+                    </td>
+                    <td className="border-t border-gray-600 px-4 py-2 ">
+                      {transaction.tokens}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {/* Spacing below the table for "40 Tokens Available" */}
+            <div className="py-2 bg-black px-8 mt-8 rounded-full">
+              40 Tokens Available
+            </div>
+            <button className="rounded-full bg-tgreen px-8 py-4">Redeem</button>
+          </div>
+        </main>
+      )}
     </div>
   );
 }
