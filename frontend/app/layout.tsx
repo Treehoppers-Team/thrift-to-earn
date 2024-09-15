@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 // import type { WalletConnectOptions } from '@vechain/dapp-kit';
 import dynamic from 'next/dynamic';
+import { ThriftProvider } from "./context/thriftContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -42,15 +43,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-                <DAppKitProvider
-                    genesis="test"
-                    logLevel="DEBUG"
-                    nodeUrl="https://testnet.vechain.org/"
-                    usePersistence
-                    // walletConnectOptions={walletConnectOptions}
-                >
-                    {children}
-                </DAppKitProvider>      </body>
+        <ThriftProvider>
+          <DAppKitProvider
+            genesis="test"
+            logLevel="DEBUG"
+            nodeUrl="https://testnet.vechain.org/"
+            usePersistence
+            // walletConnectOptions={walletConnectOptions}
+          >
+            {children}
+          </DAppKitProvider>
+        </ThriftProvider>{" "}
+      </body>
     </html>
   );
 }

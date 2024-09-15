@@ -3,19 +3,23 @@
 import { Button, Fade, Text } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
 import { useWallet, useWalletModal } from "@vechain/dapp-kit-react";
+import { useThrift } from "../context/thriftContext";
 
 export const ConnectWalletButton = () => {
   const { account } = useWallet();
   const { open, onConnectionStatusChange } = useWalletModal();
   const [isClient, setIsClient] = useState(false);
   const [buttonText, setButtonText] = useState("Connect Wallet");
-
+  const {walletAddress, setWalletAddress} = useThrift()
+ 
   const handleConnected = useCallback((address: string | null) => {
     if (address) {
       const formattedAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
       setButtonText(`Disconnect ${formattedAddress}`);
+      setWalletAddress(address); // Set wallet address when connected
     } else {
       setButtonText("Connect Wallet");
+      setWalletAddress(null); // Set wallet address to null when not connected
     }
   }, []);
 
@@ -25,7 +29,8 @@ export const ConnectWalletButton = () => {
   }, [account, handleConnected]);
 
   useEffect(() => {
-    const unsubscribe:any = onConnectionStatusChange(handleConnected);
+    const unsubscribe: any = onConnectionStatusChange(handleConnected);
+    console.log(walletAddress);
     return () => {
       if (unsubscribe) unsubscribe();
     };
