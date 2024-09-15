@@ -56,52 +56,48 @@ export default function Merchant() {
           </h1>
         </div>
       ) : (
-        <main className="flex flex-col gap-8 items-center text-center max-w-full text-white">
-          <div className="flex flex-col justify-center items-center gap-4 text-center">
-            <div className="py-2 bg-black px-8 mb-8 rounded-full">
-              <h1 className="font-news text-xl">Thrifter</h1>
+        <main className="flex flex-col gap-12 items-center text-center max-w-full w-full text-white">
+          <div className="flex flex-col justify-center items-center gap-8 text-center w-full max-w-4xl">
+            <div className="py-3 bg-black px-10 mb-8 rounded-full">
+              <h1 className="font-news text-2xl">Thrifter</h1>
             </div>
 
-            <table className="min-w-full bg-black text-white text-center">
-              <thead>
-                <tr>
-                  <th className="border-b-2 border-gray-600 px-4 py-2">Date</th>
-                  <th className="border-b-2 border-gray-600 px-4 py-2">
-                    Transaction Hash
-                  </th>
-                  <th className="border-b-2 border-gray-600 px-4 py-2">
-                    Tokens Distributed
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {transactions.map((transaction, index) => (
-                  <tr key={index}>
-                    <td className="border-t border-gray-600 px-4 py-2">
-                      {transaction.date}
-                    </td>
-                    <td className="border-t border-gray-600 px-4 py-2">
-                      <a
-                        href={`https://explore.vechain.org/transactions/${transaction.txHash}#info`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-400 hover:underline"
-                      >
-                        {shortenTxHash(transaction.txHash)}
-                      </a>
-                    </td>
-                    <td className="border-t border-gray-600 px-4 py-2 ">
-                      {transaction.tokens}
-                    </td>
+            <div className="w-full overflow-hidden rounded-lg shadow-lg">
+              <table className="min-w-full bg-black text-white text-center">
+                <thead className="bg-[#001e00]">
+                  <tr>
+                    <th className="px-6 py-4 text-sm font-semibold uppercase">Date</th>
+                    <th className="px-6 py-4 text-sm font-semibold uppercase">Transaction Hash</th>
+                    <th className="px-6 py-4 text-sm font-semibold uppercase">Tokens Distributed</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-            {/* Spacing below the table for "40 Tokens Available" */}
-            <div className="py-2 bg-black px-8 mt-8 rounded-full">
+                </thead>
+                <tbody className="divide-y divide-gray-700">
+                  {transactions.map((transaction, index) => (
+                    <tr key={index} className="hover:bg-gray-900">
+                      <td className="px-6 py-4">{transaction.date}</td>
+                      <td className="px-6 py-4">
+                        <a
+                          href={`https://explore.vechain.org/transactions/${transaction.txHash}#info`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-400 hover:underline"
+                        >
+                          {shortenTxHash(transaction.txHash)}
+                        </a>
+                      </td>
+                      <td className="px-6 py-4">{transaction.tokens}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            
+            <div className="py-3 bg-black px-10 mt-10 rounded-full text-lg">
               40 Tokens Available
             </div>
-            <button className="rounded-full bg-tgreen px-8 py-4">Redeem</button>
+            <button className="rounded-[20px] hover:bg-tgreen  bg-[#001e00] px-10 py-4 text-lg font-semibold hover:bg-opacity-90 transition-colors">
+              Redeem
+            </button>
           </div>
         </main>
       )}
