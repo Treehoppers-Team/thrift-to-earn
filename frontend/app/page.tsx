@@ -2,20 +2,11 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ConnectWalletButton } from './components/ConnectWallet';
-import {
-  WalletButton,
-  useWallet,
-  useWalletModal,
-} from '@vechain/dapp-kit-react';
+import { WalletButton } from '@vechain/dapp-kit-react';
 
 export default function Home() {
   return (
     <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen md:p-8 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-neutral-900">
-      <header className="w-full flex justify-between items-center p-4">
-        <h2 className="text-3xl font-news text-tpeach">Thriftr</h2>
-        <WalletButton />
-      </header>
       <main className="flex flex-col gap-8 items-center text-center max-w-4xl p-4">
         <motion.h1  
           className="text-5xl font-bold leading-tight font-news text-white"
@@ -53,8 +44,6 @@ export default function Home() {
           Your browser does not support the video tag.
         </motion.video>
         </motion.div>
-
-        {/* <ConnectWalletButton /> */}
 
         <div className='my-6 flex flex-col space-y-6'>
           <Link 

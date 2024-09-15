@@ -5,6 +5,7 @@ import "./globals.css";
 // import type { WalletConnectOptions } from '@vechain/dapp-kit';
 import dynamic from 'next/dynamic';
 import { ThriftProvider } from "./context/thriftContext";
+import Header from "./components/Header";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -51,6 +52,7 @@ export default function RootLayout({
             usePersistence
             // walletConnectOptions={walletConnectOptions}
           >
+            <Header />
             {children}
           </DAppKitProvider>
         </ThriftProvider>{" "}

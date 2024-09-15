@@ -1,17 +1,26 @@
 "use client";
 
-import {
-  WalletButton,
-  useWallet,
-  useWalletModal,
-} from "@vechain/dapp-kit-react";
-import Link from "next/link";
-import { useThrift } from "../context/thriftContext";
-import { ConnectWalletButton } from "../components/ConnectWallet";
+import { useWallet, useWalletModal } from "@vechain/dapp-kit-react";
+import { useEffect, useState } from "react";
+
 
 export default function Merchant() {
+
+  const { account } = useWallet();
+  const { onConnectionStatusChange } = useWalletModal();
+  const [, setConnectionStatus] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onConnectionStatusChange(() => {
+      setConnectionStatus(prev => !prev); // Toggle to force re-render
+    });
+
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
+  }, [onConnectionStatusChange]);
+
   // Transaction data
-  const { walletAddress, setWalletAddress } = useThrift();
   const transactions = [
     {
       date: "15-09-2024",
@@ -40,14 +49,7 @@ export default function Merchant() {
 
   return (
     <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-4 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-neutral-900">
-      <header className="w-full flex justify-between items-center">
-        <Link href="/">
-          <h2 className="text-3xl font-news text-tpeach">Thriftr</h2>
-        </Link>
-        {/* <WalletButton /> */}
-        <ConnectWalletButton/>
-      </header>
-      {!walletAddress ? (
+      {!account ? (
         <div className="flex flex-col items-center justify-center min-h-[60vh]">
           <h1 className="text-2xl text-white mb-4">
             Please connect your wallet
